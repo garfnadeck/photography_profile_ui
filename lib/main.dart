@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 void main() => runApp(Myapp());
 
@@ -13,7 +15,14 @@ class Myapp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  List tags = ["travel", "urban", "fashin", "lifestyle", "editing"];
+  List categories = [
+    "Featured",
+    "Neon City",
+    "Street Art",
+    "Fashion",
+    "Studio"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -149,6 +158,176 @@ class MyHomePage extends StatelessWidget {
                   ),
                 )
               ],
+            ),
+          ),
+          Container(
+            height: 44,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: tags.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(33),
+                      border: Border.all(color: Colors.white12)),
+                  margin: EdgeInsets.only(right: 13),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 13.0, bottom: 5, right: 20, left: 20),
+                    child: Text(
+                      tags[index],
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          Expanded(
+            child: Container(
+              width: double.infinity,
+              margin: EdgeInsets.only(top: 15),
+              decoration: BoxDecoration(
+                  color: Color(0xffefefef),
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(34))),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 33, right: 25, left: 25),
+                    child: Text(
+                      "Portfolio",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 33),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(right: 25, left: 25),
+                    height: 44,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: categories.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: EdgeInsets.only(right: 17, top: 3),
+                          child: index == 1
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      categories[index],
+                                      style: TextStyle(
+                                          color: Color(0xff434ae8),
+                                          fontSize: 19),
+                                    ),
+                                    CircleAvatar(
+                                      radius: 2,
+                                      backgroundColor: Color(0xff434ae8),
+                                    )
+                                  ],
+                                )
+                              : Text(categories[index],
+                                  style: TextStyle(
+                                      color: Colors.grey.withOpacity(0.9),
+                                      fontSize: 19)),
+                        );
+                      },
+                    ),
+                  ),
+                  Expanded(
+                      child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      Align(
+                        alignment: Alignment.topCenter,
+                        child: Container(
+                          padding: EdgeInsets.only(right: 25, left: 25),
+                          alignment: Alignment.topCenter,
+                          child: Container(
+                            height: 200,
+                            child: StaggeredGridView.countBuilder(
+                              crossAxisCount: 4,
+                              itemCount: 4,
+                              itemBuilder: (BuildContext context, int index) =>
+                                  Container(
+                                child: ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)),
+                                  child: Image.asset(
+                                    "assets/img${index + 1}.jpg",
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              staggeredTileBuilder: (int index) =>
+                                  StaggeredTile.count(2, index.isEven ? 3 : 1),
+                              mainAxisSpacing: 9,
+                              crossAxisSpacing: 8,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.only(right: 12, left: 12),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(33))),
+                        height: 55,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Icon(
+                              Icons.home,
+                              color: Color(0xff434be6),
+                            ),
+                            Icon(
+                              Icons.notifications_active,
+                              color: Colors.grey.withOpacity(0.6),
+                            ),
+                            SizedBox(
+                              width: 33,
+                            ),
+                            Icon(
+                              Icons.favorite,
+                              color: Colors.grey.withOpacity(0.6),
+                            ),
+                            Icon(
+                              Icons.person,
+                              color: Colors.grey.withOpacity(0.6),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 23,
+                        child: Container(
+                          height: 66,
+                          width: 66,
+                          child: Icon(
+                            Icons.add,
+                            size: 27,
+                            color: Colors.white,
+                          ),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(55)),
+                              gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xff6615c1),
+                                    Color(0xff584fde)
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight)),
+                        ),
+                      )
+                    ],
+                  ))
+                ],
+              ),
             ),
           )
         ],
